@@ -5,8 +5,6 @@ const { promisify } = require("util");
 const { glob } = require("glob");
 const PG = promisify(glob);
 const Ascii = require("ascii-table");
-const express = require("express");
-var app = express();
 
 client.commands = new Collection();
 client.buttons = new Collection();
