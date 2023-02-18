@@ -5,7 +5,7 @@ const exec = require("child_process").exec;
 module.exports = {
   name: "debug",
   description: "Do some debug stuff.",
-  permission: "SEND_MESSAGES",
+  permission: "ADMINISTRATOR",
   type: "Forbidden",
   usage: "`Forbidden`",
   options: [
@@ -21,17 +21,18 @@ module.exports = {
    * @param {Client} client
    */
   async execute(interaction, client) {
+    const string = interaction.options.getString("option");
+    if (string === "restart") {
+      interaction.reply({ content: "Restarting...", ephemeral: true });
+      exec("pm2 restart index.js", { encoding: "utf-8" });
+    }
     if (interaction.user.id !== "452436342841016341") {
       return interaction.reply({
         content: "You cannot run this command.",
         ephemeral: true,
       });
     }
-    const string = interaction.options.getString("option");
-    if (string === "restart") {
-      interaction.reply({ content: "Restarting...", ephemeral: true });
-      exec("pm2 restart index.js", { encoding: "utf-8" });
-    } else if (string === "stop") {
+      if (string === "stop") {
       interaction.reply({ content: "Stopping...", ephemeral: true });
       exec("pm2 stop index.js", { encoding: "utf-8" });
     } else if (string === "pull") {
